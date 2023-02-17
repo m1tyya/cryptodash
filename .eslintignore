@@ -1,0 +1,7 @@
+!.vscode/extensions.json
+!.vscode/settings.json
+.env
+.vscode/
+dist/
+node_modules/
+!.storybook
