@@ -1,22 +1,33 @@
 import { Box } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack/Stack';
-import { useState } from 'react';
+import { type z } from 'zod';
 
 import { CARDS_PER_PAGE } from '~/constants';
+import { useAppDispatch, useAppSelector } from '~/hooks';
+import { type CoinSchema } from '~/hooks/fetch';
 import { useData } from '~/hooks/fetch';
 import { CoinCard } from '~/molecules/coin-card';
+import { setPage } from '~/store/slices/ui.slice';
 
 export function CardGrid() {
-	const [currentPage, setCurrentPage] = useState(1);
+	const currentPage = useAppSelector((state) => state.ui.page);
+	const dispatch = useAppDispatch();
 	const { data, error, loading } = useData();
 
 	const lastPostIndex = currentPage * CARDS_PER_PAGE;
 	const firstPostIndex = lastPostIndex - CARDS_PER_PAGE;
-	const currentCards = data?.slice(firstPostIndex, lastPostIndex);
 
-	function handlePagination(event: any, pageNumber: number) {
-		setCurrentPage(pageNumber);
+	function filterCards(): Array<z.infer<typeof CoinSchema>> {
+		if (!data) {
+			return [];
+		}
+
+		return data.slice(firstPostIndex, lastPostIndex);
+	}
+
+	function handlePagination(pageNumber: number) {
+		dispatch(setPage(pageNumber));
 	}
 
 	if (error) {
@@ -34,14 +45,15 @@ export function CardGrid() {
 				gap={3}
 				gridTemplateColumns={{ lg: 'repeat(4, 1fr)', md: 'repeat(3, 1fr)', sm: 'repeat(2, 1fr)' }}
 				width='90%'>
-				{currentCards?.map((coin) => (
+				{filterCards().map((coin) => (
 					<CoinCard key={coin.id} {...coin} />
 				))}
 			</Box>
 			<Pagination
 				color='primary'
 				count={10}
-				onChange={(event, pageNumber) => handlePagination(event, pageNumber)}
+				onChange={(event, pageNumber) => handlePagination(pageNumber)}
+				page={currentPage}
 			/>
 		</Stack>
 	);
