@@ -1,6 +1,8 @@
+import { keyframes } from '@emotion/react';
 import { Box, Unstable_Grid2 as Grid } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import Marquee from 'react-fast-marquee';
 import { type z } from 'zod';
 
 import { type CoinSchema } from '~/hooks/fetch';
@@ -8,6 +10,14 @@ import { type CoinSchema } from '~/hooks/fetch';
 import { theme } from '~/styles/theme';
 import { formatPrice, formatPriceChange } from '~/utils';
 
+const scroll = keyframes`
+from {
+	transform: translateX(100%);
+}
+to {
+	transform: translateX(-100%);
+}
+`;
 type Props = z.infer<typeof CoinSchema>;
 
 export function CoinCard({
@@ -36,8 +46,10 @@ export function CoinCard({
 				backgroundColor: theme.palette.background.paper,
 				transition: 'all 0.2s ease-in-out 0s',
 			}}>
-			<Grid xs={6}>
-				<Typography variant='h2'>{name}</Typography>
+			<Grid overflow='hidden' xs={6}>
+				<Typography sx={{ whiteSpace: 'nowrap' }} variant='h2'>
+					<Marquee gradient={false}>{name}&nbsp;&nbsp;&nbsp;</Marquee>
+				</Typography>
 				<Typography marginTop={1} variant='body1'>
 					{symbol.toUpperCase()}
 				</Typography>

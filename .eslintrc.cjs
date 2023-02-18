@@ -115,7 +115,14 @@ module.exports = defineConfig({
 					'error',
 					{
 						message: 'Import from index.',
-						patterns: ['~/components/*/*', '~/features/*/*', '~/layouts/*/*', '~/styles/*', '~/types/*', '~/utils/*'],
+						patterns: [
+							'~/components/*/*',
+							'~/features/*/*',
+							'~/layouts/*/*',
+							'~/styles/*',
+							'~/types/*',
+							'~/utils/*',
+						],
 					},
 				],
 				'@typescript-eslint/no-useless-constructor': 'warn',

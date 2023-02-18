@@ -15,6 +15,10 @@ export function CardGrid() {
 	const firstPostIndex = lastPostIndex - CARDS_PER_PAGE;
 	const currentCards = data?.slice(firstPostIndex, lastPostIndex);
 
+	function handlePagination(event: any, pageNumber: number) {
+		setCurrentPage(pageNumber);
+	}
+
 	if (error) {
 		return <p>Error</p>;
 	}
@@ -34,7 +38,11 @@ export function CardGrid() {
 					<CoinCard key={coin.id} {...coin} />
 				))}
 			</Box>
-			<Pagination count={10} />
+			<Pagination
+				color='primary'
+				count={10}
+				onChange={(event, pageNumber) => handlePagination(event, pageNumber)}
+			/>
 		</Stack>
 	);
 }
