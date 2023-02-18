@@ -1,9 +1,9 @@
-import { Box } from '@mui/material';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack/Stack';
+import { FormatListBulleted, GridViewRounded } from '@mui/icons-material';
+import { Box, CircularProgress, Pagination, Stack } from '@mui/material';
 import { type z } from 'zod';
 
-import { CARDS_PER_PAGE } from '~/constants';
+import { IconButton } from '~/atoms/icon-button';
+import { COINS_PER_PAGE, FETCHED_COINS_COUNT } from '~/constants';
 import { useAppDispatch, useAppSelector } from '~/hooks';
 import { type CoinSchema } from '~/hooks/fetch';
 import { useData } from '~/hooks/fetch';
@@ -15,8 +15,8 @@ export function CardGrid() {
 	const dispatch = useAppDispatch();
 	const { data, error, loading } = useData();
 
-	const lastPostIndex = currentPage * CARDS_PER_PAGE;
-	const firstPostIndex = lastPostIndex - CARDS_PER_PAGE;
+	const lastPostIndex = currentPage * COINS_PER_PAGE;
+	const firstPostIndex = lastPostIndex - COINS_PER_PAGE;
 
 	function filterCards(): Array<z.infer<typeof CoinSchema>> {
 		if (!data) {
@@ -35,11 +35,15 @@ export function CardGrid() {
 	}
 
 	if (loading) {
-		return <p>Loading</p>;
+		return <CircularProgress />;
 	}
 
 	return (
-		<Stack alignItems='center' justifyContent='space-evenly' minHeight='100vh'>
+		<>
+			<Stack direction='row' gap={3}>
+				<IconButton Icon={GridViewRounded} label='Grid View' size='40px' />
+				<IconButton Icon={FormatListBulleted} label='List View' size='40px' />
+			</Stack>
 			<Box
 				display='grid'
 				gap={3}
@@ -51,10 +55,10 @@ export function CardGrid() {
 			</Box>
 			<Pagination
 				color='primary'
-				count={10}
+				count={Math.ceil(FETCHED_COINS_COUNT / COINS_PER_PAGE)}
 				onChange={(event, pageNumber) => handlePagination(pageNumber)}
 				page={currentPage}
 			/>
-		</Stack>
+		</>
 	);
 }

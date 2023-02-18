@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
+import { FETCHED_COINS_COUNT } from '~/constants';
+
 export const CoinSchema = z.object({
 	current_price: z.number(),
 	id: z.string(),
@@ -26,7 +28,7 @@ export function useData(): Response {
 		try {
 			const fetchedData = (await (
 				await fetch(
-					'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1',
+					`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${FETCHED_COINS_COUNT}&page=1`,
 				)
 			).json()) as Array<z.infer<typeof CoinSchema>>;
 			CoinSchema.array().parse(fetchedData)
