@@ -213,7 +213,7 @@ module.exports = defineConfig({
 		'no-new-func': 'warn',
 		'no-new-object': 'warn',
 		'no-new-wrappers': 'warn',
-		'no-param-reassign': 'warn',
+		'no-param-reassign': 'error',
 		'no-unneeded-ternary': 'warn',
 		'no-useless-escape': 'warn',
 		'no-var': 'warn',

@@ -8,38 +8,36 @@ export const CoinSchema = z.object({
 	name: z.string(),
 	price_change_percentage_24h: z.number(),
 	symbol: z.string(),
-	total_volume: z.number(),
 });
 
-type Status = {
-	data?: Array<z.infer<typeof CoinSchema>>;
-	error?: Error;
-	loading: boolean;
-};
+type Response =
+	| {
+			data: Array<z.infer<typeof CoinSchema>>;
+			error?: undefined;
+			loading: false;
+	  }
+	| { data?: undefined; error: Error; loading: false }
+	| { data?: undefined; error?: undefined; loading: true };
 
-export function useData(): Status {
-	const [status, setStatus] = useState<Status>({
-		loading: false,
-	});
+export function useData(): Response {
+	const [response, setResponse] = useState<Response>({ loading: true });
 
 	async function fetchData() {
-		setStatus({ loading: true });
 		try {
 			const fetchedData = (await (
 				await fetch(
 					'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1',
 				)
 			).json()) as Array<z.infer<typeof CoinSchema>>;
-			console.log(fetchedData.at(0));
 			CoinSchema.array().parse(fetchedData)
-				? setStatus({ loading: false })
-				: setStatus({
+				? setResponse({ data: fetchedData, loading: false })
+				: setResponse({
 						error: new Error('Incorrect data fetched. Try again later'),
 						loading: false,
 				  });
 		} catch (error) {
 			if (error instanceof Error) {
-				setStatus({ error, loading: false });
+				setResponse({ error, loading: false });
 			}
 			throw error;
 		}
@@ -49,5 +47,5 @@ export function useData(): Status {
 		fetchData();
 	}, []);
 
-	return status;
+	return response;
 }

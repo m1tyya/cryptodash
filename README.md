@@ -1,4 +1,4 @@
-# Coin Card App
+# Coin Card App (NOT COMPLETED)
 
 ## Scripts
 
