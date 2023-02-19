@@ -1,22 +1,17 @@
-import { Paper, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-import { CardGrid } from '~/organisms/card-grid';
+import { CardGrid } from '~/organisms/card-items';
 
 export function Home() {
 	const theme = useTheme();
 
 	return (
-		<Paper sx={{ backgroundColor: theme.palette.background.default }}>
-			<Stack
-				alignItems='center'
-				gap={10}
-				justifyContent='center'
-				minHeight='100vh'
-				paddingX={2}
-				paddingY={4}>
-				<CardGrid />
-			</Stack>
-		</Paper>
+		<Stack
+			alignItems='center'
+			justifyContent='center'
+			sx={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
+			<CardGrid />
+		</Stack>
 	);
 }

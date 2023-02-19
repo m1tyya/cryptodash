@@ -8,12 +8,11 @@ type Props = {
 	size: string;
 };
 
-export function IconButton({ Icon, onClick, size }: Props) {
+export function IconButton({ Icon, label, onClick, size }: Props) {
 	return (
-		<Button onClick={onClick} variant='outlined'>
+		<Button onClick={onClick} title={label} variant='outlined'>
 			<Stack
 				alignItems='center'
-				// border='2px solid white'
 				borderRadius={2}
 				fontSize={size}
 				height={size}

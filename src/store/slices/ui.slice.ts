@@ -3,12 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type UiState = {
 	page: number;
-	view: 'cards' | 'list';
+	view: 'card' | 'list';
 };
 
 const initialState: UiState = {
 	page: 1,
-	view: 'cards',
+	view: 'card',
 };
 
 export const uiSlice = createSlice({
