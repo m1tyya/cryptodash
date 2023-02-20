@@ -13,14 +13,19 @@ import {
 } from '@mui/material';
 import { type z } from 'zod';
 
-import { IconButton } from '~/atoms/icon-button';
-import { COINS_PER_PAGE, FETCHED_COINS_COUNT } from '~/constants';
-import { useAppDispatch, useAppSelector } from '~/hooks';
-import { type CoinSchema } from '~/hooks/fetch';
-import { useData } from '~/hooks/fetch';
-import { CoinItem } from '~/molecules/coin-item';
-import { type RootState } from '~/store';
-import { setPage, setView } from '~/store/slices/ui.slice';
+import {
+	type CoinSchema,
+	type RootState,
+	CoinItem,
+	COINS_PER_PAGE,
+	FETCHED_COINS_COUNT,
+	IconButton,
+	setPage,
+	setView,
+	useAppDispatch,
+	useAppSelector,
+	useData,
+} from '~';
 
 export function CardGrid() {
 	const { page: currentPage, view } = useAppSelector((state) => state.ui);
@@ -117,7 +122,7 @@ export function CardGrid() {
 			<Pagination
 				color='primary'
 				count={Math.ceil(FETCHED_COINS_COUNT / COINS_PER_PAGE)}
-				onChange={(event, pageNumber) => handlePagination(pageNumber)}
+				onChange={(_event, pageNumber) => handlePagination(pageNumber)}
 				page={currentPage}
 			/>
 		</Stack>

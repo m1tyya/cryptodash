@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { Home } from '~/pages';
 
-import { store } from './store';
+import { store } from './store/_root';
 import { theme } from './styles/theme';
 
 const persistor = persistStore(store);

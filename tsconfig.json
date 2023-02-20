@@ -1,25 +1,41 @@
 {
-  "compilerOptions": {
-	"baseUrl": ".",
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-	"paths": {
-		"~/*": ["src/*"]
-  },
-},
-  "include": ["src", "**/*.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"compilerOptions": {
+		"allowJs": false,
+		"allowUnreachableCode": false,
+		"allowUnusedLabels": false,
+		"baseUrl": ".",
+		"composite": true,
+		"esModuleInterop": true,
+		"exactOptionalPropertyTypes": false,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"noEmit": true,
+		"newLine": "lf",
+		"noImplicitOverride": true,
+		"preserveValueImports": true,
+		"removeComments": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"paths": {
+			"~/*": ["src/*"],
+			"~": ["src"]
+		},
+		"resolveJsonModule": true,
+		"strict": true,
+		"target": "ESNext",
+		"types": ["vitest/globals"]
+	},
+	"include": ["src", "**/*.ts", "./tsconfig.json", "vite.config.ts"],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
 }

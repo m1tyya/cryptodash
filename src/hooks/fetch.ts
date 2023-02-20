@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
-import { FETCHED_COINS_COUNT } from '~/constants';
+import { FETCHED_COINS_COUNT } from '~';
 
 export const CoinSchema = z.object({
 	current_price: z.number(),

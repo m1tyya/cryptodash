@@ -4,11 +4,7 @@ import Typography from '@mui/material/Typography';
 import Marquee from 'react-fast-marquee';
 import { type z } from 'zod';
 
-import { type CoinSchema } from '~/hooks/fetch';
-import { type RootState } from '~/store';
-// eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import { theme } from '~/styles/theme';
-import { formatPrice, formatPriceChange } from '~/utils';
+import { type CoinSchema, type RootState, formatPrice, formatPriceChange, theme } from '~';
 
 type Props = z.infer<typeof CoinSchema> & { view: RootState['ui']['view'] };
 
@@ -19,7 +15,7 @@ export function CoinItem({
 	price_change_percentage_24h,
 	symbol,
 	view,
-}: Props) {
+}: Props): JSX.Element {
 	switch (view) {
 		case 'card': {
 			return (
@@ -103,6 +99,9 @@ export function CoinItem({
 					</TableCell>
 				</TableRow>
 			);
+		}
+		default: {
+			return <></>;
 		}
 	}
 }

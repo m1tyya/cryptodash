@@ -5,7 +5,6 @@ module.exports = defineConfig({
 	env: {
 		browser: true,
 		es2022: true,
-		jest: true,
 		node: true,
 	},
 	extends: ['plugin:storybook/recommended'],
@@ -57,14 +56,9 @@ module.exports = defineConfig({
 			},
 		},
 		{
-			files: ['*.d.ts'],
-			rules: {
-				'@typescript-eslint/triple-slash-reference': 'off',
-			},
-		},
-		{
 			files: ['*.html'],
 			parser: '@html-eslint/parser',
+			plugins: ['@html-eslint'],
 			rules: {
 				'@html-eslint/indent': ['warn', 'tab'],
 				'@html-eslint/no-trailing-spaces': 'warn',
@@ -81,8 +75,10 @@ module.exports = defineConfig({
 			files: ['*.ts', '*.tsx'],
 			parser: '@typescript-eslint/parser',
 			parserOptions: {
-				project: './tsconfig.json',
+				project: 'tsconfig.json',
+				tsconfigRootDir: __dirname,
 			},
+			plugins: ['@typescript-eslint'],
 			rules: {
 				'@typescript-eslint/array-type': [
 					'warn',
@@ -98,8 +94,8 @@ module.exports = defineConfig({
 																*/
 					},
 				],
-				'@typescript-eslint/method-signature-style': ['warn', 'property'],
-
+				'@typescript-eslint/dot-notation': 'warn',
+				'@typescript-eslint/method-signature-style': 'warn',
 				'@typescript-eslint/naming-convention': [
 					'warn',
 					{
@@ -114,14 +110,15 @@ module.exports = defineConfig({
 				'@typescript-eslint/no-restricted-imports': [
 					'error',
 					{
-						message: 'Import from index.',
 						patterns: [
-							'~/components/*/*',
-							'~/features/*/*',
-							'~/layouts/*/*',
-							'~/styles/*',
-							'~/types/*',
-							'~/utils/*',
+							{
+								group: ['~/*', '!~/pages', '!~/features/*', '~/features/*/*'],
+								message: 'Import from src folder.',
+							},
+							{
+								group: ['~/features/*/*'],
+								message: 'Import from feature root folder.',
+							},
 						],
 					},
 				],
@@ -143,6 +140,14 @@ module.exports = defineConfig({
 						types: 'never',
 					},
 				],
+				'array-callback-return': 'warn',
+			},
+		},
+		{
+			files: ['*.d.ts'],
+			plugins: ['@typescript-eslint'],
+			rules: {
+				'@typescript-eslint/triple-slash-reference': 'off',
 			},
 		},
 		{
@@ -161,7 +166,6 @@ module.exports = defineConfig({
 		sourceType: 'module',
 	},
 	plugins: [
-		'@html-eslint',
 		'sort-exports',
 		'typescript-sort-keys',
 		'sort-keys-fix',
@@ -171,7 +175,6 @@ module.exports = defineConfig({
 		'destructuring',
 		'import',
 		'jsonc',
-		'jest',
 		'jsx-a11y',
 		'simple-import-sort',
 		'sort-class-members',
@@ -185,7 +188,6 @@ module.exports = defineConfig({
 		'sort-react-dependency-arrays',
 		'unicorn',
 		'unused-imports',
-		'@typescript-eslint',
 	],
 	root: true,
 	rules: {
@@ -199,7 +201,6 @@ module.exports = defineConfig({
 		],
 		'canonical/prefer-inline-type-import': 'warn',
 		curly: ['warn', 'all'],
-		'dot-notation': 'warn',
 		eqeqeq: ['warn', 'smart'],
 		'import/first': 'warn',
 		'import/newline-after-import': 'warn',
@@ -212,6 +213,7 @@ module.exports = defineConfig({
 		],
 		'no-case-declarations': 'warn',
 		'no-confusing-arrow': 'warn',
+		'no-constant-condition': 'warn',
 		'no-dupe-class-members': 'warn',
 		'no-eval': 'warn',
 		'no-iterator': 'warn',

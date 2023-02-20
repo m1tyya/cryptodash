@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-import { CardGrid } from '~/organisms/card-items';
+import { CardGrid } from '~';
 
 export function Home() {
 	const theme = useTheme();
